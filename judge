@@ -1,0 +1,30 @@
+# 定义超参数
+batch_size = 128 # 每个批次（batch）的样本数
+
+# 对输入的数据进行标准化处理
+# transforms.ToTensor() 将图像数据转换为 PyTorch 中的张量（tensor）格式，并将像素值缩放到 0-1 的范围内。
+# 这是因为神经网络需要的输入数据必须是张量格式，并且需要进行归一化处理，以提高模型的训练效果。
+# transforms.Normalize(mean=[0.5],std=[0.5]) 将图像像素值进行标准化处理，使其均值为 0，标准差为 1。
+# 输入数据进行标准化处理可以提高模型的鲁棒性和稳定性，减少模型训练过程中的梯度爆炸和消失问题。
+transform = transforms.Compose([transforms.ToTensor(),
+                               transforms.Normalize(mean=[0.5],std=[0.5])])
+
+# 加载MNIST数据集
+train_dataset = torchvision.datasets.MNIST(root='./data', 
+                                           train=True, 
+                                           transform=transform, 
+                                           download=True)
+test_dataset = torchvision.datasets.MNIST(root='./data', 
+                                          train=False, 
+                                          transform=transform, 
+                                          download=True)
+                                          
+# 创建数据加载器（用于将数据分次放进模型进行训练）
+train_loader = torch.utils.data.DataLoader(dataset=train_dataset, 
+                                           batch_size=batch_size, 
+                                           shuffle=True, # 装载过程中随机乱序
+                                           num_workers=2) # 表示2个子进程加载数据
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset, 
+                                          batch_size=batch_size, 
+                                          shuffle=False,
+                                          num_workers=2) 
