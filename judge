@@ -29,6 +29,12 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=False,
                                           num_workers=2) 
 
+#  [ 5.9836e-01,  1.0973e+00,  1.2426e+00,  ...,  7.0064e-01,
+#            1.0237e-01,  1.2774e+00],
+#          [ 1.1467e+00,  8.3049e-01,  6.5060e-01,  ...,  5.4199e-01,
+#            8.4525e-02, -4.2854e-01]]]], device='cuda:0',
+#       grad_fn=<CloneBackward0>)
+
 
 def make_nformer_loss_with_center(cfg, num_classes):
     feat_dim = 256
